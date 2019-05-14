@@ -1,4 +1,4 @@
-package teste;
+package escalonador;
 
 public class Teste {
 
