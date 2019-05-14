@@ -8,7 +8,10 @@ public class Fila {
 	}
 	
 	public boolean isEmpty() {
-		return (inicio == null);
+		if(inicio == null) {
+			return true;
+		}
+		return false;
 	}
 	
 	public void enqueue( int dd ){
@@ -16,8 +19,7 @@ public class Fila {
 		
 		if(inicio == null){
 			inicio = fim = newNo;
-		}
-		else {
+		}else{
 			fim.setNextNo(newNo);
 			fim = newNo;
 		}
@@ -29,13 +31,29 @@ public class Fila {
 		}
 
 		No temp = inicio;
-		inicio.setNextNo(inicio.getNextNo());
+		inicio = inicio.getNextNo();
 		
 		if(inicio == null){
 			fim = null;
 		}
 		
 		return temp.getDado();
+	}
+	
+	public String show() {
+		String saida = "";
+		if (isEmpty()) {
+			return saida;
+		}else{
+			No atual = inicio;
+
+			while (atual != null) {
+				saida += atual.getDado() + " ";
+				atual = atual.getNextNo();
+			}
+			
+			return saida;
+		}
 	}
 
 }
