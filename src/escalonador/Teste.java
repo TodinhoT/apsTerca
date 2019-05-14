@@ -15,5 +15,8 @@ public class Teste {
 //		}
 		
 		System.out.println(fila.show());
+		System.out.println(fila.peek());
+		System.out.println(fila.size());
+		
 	}
 }

@@ -55,5 +55,22 @@ public class Fila {
 			return saida;
 		}
 	}
+	
+	public int size() {
+		int cont = 0;
+
+		No atual = inicio;
+
+		while (atual != null) {
+			cont ++;
+			atual = atual.getNextNo();
+		}
+		
+		return cont;
+	}
+	
+	public int peek() {
+		return inicio.getDado();
+	}
 
 }
