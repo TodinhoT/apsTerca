@@ -8,9 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class GerenciadorDeArquivo {
-	private String fileName = null;
-	private String[] fileContent = null;
-
+	
 	public void createFile() throws IOException {
 		File file = new File("APS.txt");
 
@@ -37,16 +35,16 @@ public class GerenciadorDeArquivo {
 		}
 	}
 
-	public void readFile() throws IOException {
+	public String readFile() throws IOException {
 		FileReader reader = new FileReader("APS.txt");
 		BufferedReader bfReader = new BufferedReader(reader);
-
-		int i = 0;
+		String txt = "";
 		while (bfReader.ready()) {
-			fileContent[i] = bfReader.readLine();
-			i++;
+			txt += bfReader.readLine();
 		}
 
 		bfReader.close();
+		
+		return txt.toString();
 	}
 }

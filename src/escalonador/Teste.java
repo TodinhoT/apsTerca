@@ -1,9 +1,13 @@
 package escalonador;
 
+import java.io.IOException;
+
 public class Teste {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException{
 		Fila fila = new Fila();
-		int i = 0;
+		GerenciadorDeArquivo gf = new GerenciadorDeArquivo();
+		
+		System.out.println(gf.readFile());
 		
 		fila.enqueue(5);
 		fila.enqueue(6);
