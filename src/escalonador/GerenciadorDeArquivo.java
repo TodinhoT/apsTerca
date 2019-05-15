@@ -40,10 +40,18 @@ public class GerenciadorDeArquivo {
 	public void readFile() throws IOException {
 		FileReader reader = new FileReader("APS.txt");
 		BufferedReader bfReader = new BufferedReader(reader);
+<<<<<<< HEAD
 
 		int i = 0;
 		while (bfReader.ready()) {
 			fileContent[i] = bfReader.readLine();
+=======
+		int i = 0;
+
+		while (bfReader.ready()) {
+			fileContent[i] = bfReader.readLine();
+			i++;
+>>>>>>> 81ba7560c1725748465cf0d858a96aa9abb07442
 		}
 
 		bfReader.close();
