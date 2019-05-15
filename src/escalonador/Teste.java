@@ -31,6 +31,6 @@ public class Teste {
 //		}
 		
 		System.out.println(Arrays.toString(global));
-
+		
 	}
 }
