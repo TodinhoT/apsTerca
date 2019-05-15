@@ -7,9 +7,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class GerenciadorDeArquivo {
-		public static void main(String[] args) throws IOException{
+public class GerenciadorDeArquivo{
+			String fileName = null;
+			String[] fileContent = null;
+		public void createFile() throws IOException{
 			File file = new File("APS.txt");
+			
 			
 			if(!file.exists()) {
 				file.createNewFile();
@@ -28,16 +31,20 @@ public class GerenciadorDeArquivo {
 				bfWriter.write("P2 10 4 5\n");
 				bfWriter.write("P3 5 0 2\n");
 				bfWriter.write("P4 7 1 3,6\n");
-				bfWriter.write("P5 2 17\n");
+				bfWriter.write("P5 2 17");
 				
 				bfWriter.close();
 			}
+		}
 			
+		public void readFile() throws IOException{
 			FileReader reader = new FileReader("APS.txt");
 			BufferedReader bfReader = new BufferedReader(reader);
+			int i = 0;
 			
 			while(bfReader.ready()) {
-				System.out.println(bfReader.readLine());
+				fileContent[i] = bfReader.readLine();
+				i++;
 			}
 			
 			bfReader.close();
