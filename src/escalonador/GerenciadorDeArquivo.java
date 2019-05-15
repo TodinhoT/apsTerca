@@ -35,16 +35,31 @@ public class GerenciadorDeArquivo {
 		}
 	}
 
-	public String readFile() throws IOException {
-		FileReader reader = new FileReader("APS.txt");
-		BufferedReader bfReader = new BufferedReader(reader);
+	public String leitor(String path) throws IOException {
+		BufferedReader buffRead = new BufferedReader(new FileReader(path));
 		String txt = "";
-		while (bfReader.ready()) {
-			txt += bfReader.readLine() + " ";
+		while (buffRead.ready()) {
+			txt += buffRead.readLine() + " ";
 		}
 
-		bfReader.close();
+		buffRead.close();
 		
 		return txt;
 	}
+	
+//	public static void leitor(String path) throws IOException {
+//        BufferedReader buffRead = new BufferedReader(new FileReader(path));
+//        String linha = "";
+//        
+//        while (true) {
+//            if (linha != null) {
+//                System.out.println(linha);
+//            } else
+//                break;
+//            
+//            linha = buffRead.readLine();
+//        }
+//       
+//        buffRead.close();
+//    }
 }
