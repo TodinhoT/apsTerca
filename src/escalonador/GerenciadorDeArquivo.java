@@ -8,7 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class GerenciadorDeArquivo {
-	
+	private int qtdLinhas = 0;
+	private String[] linhas = new String[5];
+
 	public void createFile() throws IOException {
 		File file = new File("APS.txt");
 
@@ -43,23 +45,36 @@ public class GerenciadorDeArquivo {
 		}
 
 		buffRead.close();
-		
+
+		return txt;
+	}
+
+	public String leitor1(String path) throws IOException {
+		BufferedReader buffRead = new BufferedReader(new FileReader(path));
+		String linha = "";
+		String txt = "";
+
+		while (buffRead.ready()) {
+			linha = buffRead.readLine();
+			addLinha(linha);
+			txt += linha + " ";
+			
+			this.qtdLinhas++;
+		}
+		buffRead.close();
 		return txt;
 	}
 	
-//	public static void leitor(String path) throws IOException {
-//        BufferedReader buffRead = new BufferedReader(new FileReader(path));
-//        String linha = "";
-//        
-//        while (true) {
-//            if (linha != null) {
-//                System.out.println(linha);
-//            } else
-//                break;
-//            
-//            linha = buffRead.readLine();
-//        }
-//       
-//        buffRead.close();
-//    }
+	public void addLinha(String linha) {
+		this.linhas[this.qtdLinhas] = linha;
+	}
+	
+	public String[] getLinhas() {
+		return linhas;
+	}
+
+	public int getQtdLinhas() {
+		return qtdLinhas;
+	}
+
 }
