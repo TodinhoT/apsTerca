@@ -40,11 +40,11 @@ public class GerenciadorDeArquivo {
 		BufferedReader bfReader = new BufferedReader(reader);
 		String txt = "";
 		while (bfReader.ready()) {
-			txt += bfReader.readLine();
+			txt += bfReader.readLine() + " ";
 		}
 
 		bfReader.close();
 		
-		return txt.toString();
+		return txt;
 	}
 }
