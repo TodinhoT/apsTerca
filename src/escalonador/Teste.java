@@ -21,8 +21,8 @@ public class Teste {
 				esp++;
 				if (gf.readFile().charAt(i) == 'P') {
 					do {
-						process[contP] += gf.readFile().charAt(i);
-					} while (gf.readFile().charAt(i) != ' ');
+						process[contP] += gf.readFile().charAt(i); //pegar os caracteres
+					} while (gf.readFile().charAt(i) != ' '); //até proximo ESPAÇO
 					esp = 0;
 				}
 			}
