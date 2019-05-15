@@ -13,9 +13,10 @@ public class Teste {
 		int contD = 0;
 		int contC = 0;
 		int contIO = 0;
-		String[] process = new String[contP];
+		
 		String[] global = gf.leitor(path).split("\\s");
-
+		
+		
 //		System.out.println(gf.readFile());
 //
 //		for (int i = 0; i < gf.readFile().length(); i++) {
@@ -31,6 +32,6 @@ public class Teste {
 //		}
 		
 		System.out.println(Arrays.toString(global));
-		
 	}
+
 }
