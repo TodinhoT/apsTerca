@@ -10,5 +10,6 @@ public class Escalonador {
 		//começar a simulacao com o quantum fornecido
 		//verificar I/O no vetor de I/O do processo
 		//imprimir qual o processo esta no CPU, qual esta na fila e qual a duraçao
+		//necessario dois contadores de execução do processo, contador global, contador do quantum
 	}
 }
