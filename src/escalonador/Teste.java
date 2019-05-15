@@ -7,18 +7,52 @@ public class Teste {
 	public static void main(String[] args) throws IOException {
 		GerenciadorDeArquivo gf = new GerenciadorDeArquivo();
 		String path = "APS.txt";
+		String pid = "";
+		int duracao = 0, chegada = 0;
+		String[] linhas = new String[gf.getQtdLinhas()];
+//		String[] ios = new String[4];
+		Processo[] processos = new Processo[5];
 
-		String[] global = gf.leitor(path).split("\\s");
+		gf.leitor(path);
+		linhas = gf.getLinhas().clone();
 
-		System.out.println(Arrays.toString(global));
-		gf.leitor1(path);
-		String[] global1 = gf.getLinhas();
-		System.out.println(Arrays.toString(global1));
-		
-//		System.out.println(gf.leitor1(path));
-//		System.out.println(gf.getQtdLinhas());
-		
-		
+		for (int i = 0; i < linhas.length; i++) {
+			String[] temp = linhas[i].split("\\s");
+
+			for (int j = 0; j < temp.length + 1; j++) {
+				switch (j) {
+				case 0:
+					pid = temp[0];
+					break;
+				case 1:
+					duracao = Integer.parseInt(temp[1]);
+					break;
+				case 2:
+					chegada = Integer.parseInt(temp[2]);
+					break;
+				case 3:
+					if (temp.length == 4) {
+//						String[] temp1 = temp[3].split(",");
+//						for (int k = 0; k < temp1.length; k++) {
+//							ios[k] = Integer.parseInt(temp1[k]);
+//						}
+						
+						String ios[] = temp[3].split(",");
+						
+						Processo processo = new Processo(pid, duracao, chegada, ios);
+						processos[i] = processo;
+					} else {
+						Processo processo = new Processo(pid, duracao, chegada);
+						processos[i] = processo;
+					}
+					break;
+				}
+			}
+		}
+
+		for (int i = 0; i < processos.length; i++) {
+			System.out.println(Arrays.toString(processos[i].getOperacaoIO()));
+		}
 
 	}
 

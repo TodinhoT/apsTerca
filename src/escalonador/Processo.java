@@ -4,14 +4,14 @@ public class Processo {
 	private String pid;
 	private int duracao;
 	private int chegada;
-	private int[] operacaoIO;
+	private String[] operacaoIO = new String[4];
 		
 	public Processo(String pid, int duracao, int chegada) {
 		this.pid = pid;
 		this.duracao = duracao;
 		this.chegada = chegada;
 	}
-	public Processo(String pid, int duracao, int chegada, int[] operacaoIO) {
+	public Processo(String pid, int duracao, int chegada, String[] operacaoIO) {
 		this.pid = pid;
 		this.duracao = duracao;
 		this.chegada = chegada;
@@ -30,7 +30,7 @@ public class Processo {
 		return chegada;
 	}
 	
-	public int[] getOperacaoIO() {
+	public String[] getOperacaoIO() {
 		return operacaoIO;
 	}
 	
