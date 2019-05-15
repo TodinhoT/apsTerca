@@ -44,10 +44,6 @@ public class GerenciadorDeArquivo {
 		int i = 0;
 		while (bfReader.ready()) {
 			fileContent[i] = bfReader.readLine();
-		int i = 0;
-
-		while (bfReader.ready()) {
-			fileContent[i] = bfReader.readLine();
 			i++;
 		}
 
