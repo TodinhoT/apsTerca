@@ -58,6 +58,7 @@ public class Teste {
 //------------ escalonador ----------------------------------
 		Fila filaProcessos = new Fila();
 		Processo[] posicao = new Processo[1];
+		int totalD = 0;
 		
 		for (int i = 0; i < processos.length; i++) {
 			for (int j = 0; j < processos.length - 1; j++) {
@@ -71,7 +72,7 @@ public class Teste {
 		}
 		
 		for (int i = 0; i < processos.length; i++) {
-			System.out.println(processos[i].getPid());
+			totalD += processos[i].getDuracao();
 		}
 
 	}
