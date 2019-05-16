@@ -4,14 +4,15 @@ public class Processo {
 	private String pid;
 	private int duracao;
 	private int chegada;
-	private String[] operacaoIO = new String[4];
+	private Fila operacaoIO;
 		
 	public Processo(String pid, int duracao, int chegada) {
 		this.pid = pid;
 		this.duracao = duracao;
 		this.chegada = chegada;
+		this.operacaoIO = new Fila();
 	}
-	public Processo(String pid, int duracao, int chegada, String[] operacaoIO) {
+	public Processo(String pid, int duracao, int chegada, Fila operacaoIO) {
 		this.pid = pid;
 		this.duracao = duracao;
 		this.chegada = chegada;
@@ -30,7 +31,7 @@ public class Processo {
 		return chegada;
 	}
 	
-	public String[] getOperacaoIO() {
+	public Fila getOperacaoIO() {
 		return operacaoIO;
 	}
 	

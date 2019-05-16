@@ -10,7 +10,7 @@ public class Teste {
 		String pid = "";
 		int duracao = 0, chegada = 0;
 		String[] linhas = new String[gf.getQtdLinhas()];
-//		String[] ios = new String[4];
+		
 		Processo[] processos = new Processo[5];
 
 		gf.leitor(path);
@@ -37,9 +37,13 @@ public class Teste {
 //							ios[k] = Integer.parseInt(temp1[k]);
 //						}
 						
-						String ios[] = temp[3].split(",");
+						String tempIos[] = temp[3].split(",");
+						Fila filaOperacaoIO = new Fila();
+						for (int k = 0; k < tempIos.length; k++) {
+							filaOperacaoIO.enqueue(Integer.parseInt(tempIos[k]));
+						}
 						
-						Processo processo = new Processo(pid, duracao, chegada, ios);
+						Processo processo = new Processo(pid, duracao, chegada, filaOperacaoIO);
 						processos[i] = processo;
 					} else {
 						Processo processo = new Processo(pid, duracao, chegada);
@@ -51,7 +55,11 @@ public class Teste {
 		}
 
 		for (int i = 0; i < processos.length; i++) {
-			System.out.println(Arrays.toString(processos[i].getOperacaoIO()));
+			System.out.println(processos[i].getPid());
+			System.out.println(processos[i].getDuracao());
+			System.out.println(processos[i].getChegada());
+			System.out.println(processos[i].getOperacaoIO().show());
+			System.out.println("--------------------------------------------------------------------------");
 		}
 
 	}
