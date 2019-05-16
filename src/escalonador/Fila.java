@@ -111,6 +111,13 @@ public class Fila {
 		return cont;
 	}
 	
+	public Processo peekProcesso() {
+		if(isEmpty()) {
+			return null;
+		}
+		return inicio.getDd();
+	}
+	
 	public int peek() {
 		if(isEmpty()) {
 			return 0;

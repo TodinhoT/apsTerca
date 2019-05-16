@@ -78,8 +78,8 @@ public class Teste {
 		
 		posicao[0] = null;
 		while (global < 5) {
-			if (global == 0) {
-				filaProcessos.dequeueProcesso();
+			if (filaProcessos.peekProcesso().getChegada() == global) {
+				posicao[0] = filaProcessos.dequeueProcesso();
 				for (int j = 0; j < 4; j++) {
 					if (posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
 						posicao[0].getOperacaoIO().dequeue();
