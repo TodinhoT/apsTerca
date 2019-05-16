@@ -112,6 +112,9 @@ public class Fila {
 	}
 	
 	public int peek() {
+		if(isEmpty()) {
+			return 0;
+		}
 		return inicio.getDado();
 	}
 
