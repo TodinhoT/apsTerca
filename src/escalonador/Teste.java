@@ -80,10 +80,9 @@ public class Teste {
 			posicao[0] = filaProcessos.dequeueProcesso();
 			for(int j = 0; j < 4; j++) {
 				posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
-				if(String.valueOf(posicao[0].getOperacaoIO().peek()) != null || posicao[0].getOperacaoIO().peek() != 0) {
-					posicao[0].setDuracao(posicao[0].getDuracao() - 1);
-				}
+				posicao[0].setDuracao(posicao[0].getDuracao() - 1);
 				if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
+					posicao[0].getOperacaoIO().dequeue();
 					System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
 					break;
 				}
