@@ -5,21 +5,19 @@ public class Processo {
 	private int duracao;
 	private int chegada;
 	private Fila operacaoIO;
-	private int tempExecucao;
+	private int tempExecucao = 0;
 		
 	public Processo(String pid, int duracao, int chegada) {
 		this.pid = pid;
 		this.duracao = duracao;
 		this.chegada = chegada;
 		this.operacaoIO = new Fila();
-		this.tempExecucao = 0;
 	}
 	public Processo(String pid, int duracao, int chegada, Fila operacaoIO) {
 		this.pid = pid;
 		this.duracao = duracao;
 		this.chegada = chegada;
 		this.operacaoIO = operacaoIO;
-		this.tempExecucao = 0;
 	}
 	
 	public String getPid() {
