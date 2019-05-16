@@ -27,6 +27,9 @@ public class Processo {
 		return duracao;
 	}
 	
+	public void setDuracao(int duracao) {
+		this.duracao = duracao;
+	}
 	public int getChegada() {
 		return chegada;
 	}
