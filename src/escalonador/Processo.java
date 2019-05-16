@@ -6,7 +6,8 @@ public class Processo {
 	private int chegada;
 	private Fila operacaoIO;
 	private int tempExecucao = 0;
-		
+	private Fila tempEspera;
+
 	public Processo(String pid, int duracao, int chegada) {
 		this.pid = pid;
 		this.duracao = duracao;
@@ -47,6 +48,11 @@ public class Processo {
 	public void setTempExecucao(int tempExecucao) {
 		this.tempExecucao = tempExecucao;
 	}
-	
-	
+			
+	public Fila getTempEspera() {
+		return tempEspera;
+	}
+	public void setTempEspera(Fila tempEspera) {
+		this.tempEspera = tempEspera;
+	}
 }
