@@ -73,8 +73,25 @@ public class Teste {
 		
 		for (int i = 0; i < processos.length; i++) {
 			totalD += processos[i].getDuracao();
+			filaProcessos.enqueueProcesso(processos[i]);
 		}
-
+		
+		for(int i = 0; i<totalD ;i++) {
+			posicao[0] = filaProcessos.dequeueProcesso();
+			for(int j = 0; j < 4; j++) {
+				posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
+				if(posicao[0].getOperacaoIO().peek() != 0) {
+					posicao[0].setDuracao(posicao[0].getDuracao() - 1);
+				}
+				if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
+					System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
+					break;
+				}
+				if(j == 3) {
+					j = 0;
+				}
+			}
+		}
 	}
 
 }
