@@ -80,18 +80,18 @@ public class Teste {
 			posicao[0] = filaProcessos.dequeueProcesso();
 			
 			for(int j = 0; j < 4; j++) {
-				for(int i = 0; i<processos.length; i++) {
-					if(processos[i].getChegada() == global) {
-						fila += processos[i].getPid() + "(" + processos[i].getDuracao() + ")";
-					}
-					if(i == processos.length - 1) {
-						System.out.println("FILA: " + fila);
-					}
-				}
 				if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
 					posicao[0].getOperacaoIO().dequeue();
 					System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
 					break;
+				}
+				for(int i = 0; i<processos.length; i++) {
+					if(processos[i].getChegada() <= global) {
+						fila += processos[j].getPid() + "(" + processos[j].getDuracao() + ")";
+					}
+					if(i == processos.length - 1) {
+						System.out.println("FILA: " + fila);
+					}
 				}
 				posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
 				posicao[0].setDuracao(posicao[0].getDuracao() - 1);
