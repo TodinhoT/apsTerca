@@ -10,12 +10,12 @@ public class Teste {
 		String pid = "";
 		int duracao = 0, chegada = 0;
 		String[] linhas = new String[gf.getQtdLinhas()];
-		
+
 		Processo[] processos = new Processo[5];
 
 		gf.leitor(path);
 		linhas = gf.getLinhas().clone();
-
+//-------------------- Guardar todos os processos a partir do arquivo -------------------------------------
 		for (int i = 0; i < linhas.length; i++) {
 			String[] temp = linhas[i].split("\\s");
 
@@ -32,17 +32,11 @@ public class Teste {
 					break;
 				case 3:
 					if (temp.length == 4) {
-//						String[] temp1 = temp[3].split(",");
-//						for (int k = 0; k < temp1.length; k++) {
-//							ios[k] = Integer.parseInt(temp1[k]);
-//						}
-						
 						String tempIos[] = temp[3].split(",");
 						Fila filaOperacaoIO = new Fila();
 						for (int k = 0; k < tempIos.length; k++) {
 							filaOperacaoIO.enqueue(Integer.parseInt(tempIos[k]));
 						}
-						
 						Processo processo = new Processo(pid, duracao, chegada, filaOperacaoIO);
 						processos[i] = processo;
 					} else {
@@ -61,6 +55,12 @@ public class Teste {
 			System.out.println(processos[i].getOperacaoIO().show());
 			System.out.println("--------------------------------------------------------------------------");
 		}
+//------------ escalonador ----------------------------------
+		Fila filaProcessos = new Fila();
+		for (int i = 0; i < processos.length; i++) {
+			filaProcessos.enqueueProcesso(processos[i]);
+		}
+		System.out.println(filaProcessos.showProcessos());
 
 	}
 
