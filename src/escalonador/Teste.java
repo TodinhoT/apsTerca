@@ -58,8 +58,8 @@ public class Teste {
 //------------ escalonador ----------------------------------
 		Fila filaProcessos = new Fila();
 		Processo[] posicao = new Processo[1];
-		int totalD = 0;
 		int global = 0;
+		String fila = "";
 		
 		for (int i = 0; i < processos.length; i++) {
 			for (int j = 0; j < processos.length - 1; j++) {
@@ -73,7 +73,6 @@ public class Teste {
 		}
 		
 		for (int i = 0; i < processos.length; i++) {
-			totalD += processos[i].getDuracao();
 			filaProcessos.enqueueProcesso(processos[i]);
 		}
 		
@@ -81,13 +80,7 @@ public class Teste {
 			posicao[0] = filaProcessos.dequeueProcesso();
 			
 			for(int j = 0; j < 4; j++) {
-				if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
-					posicao[0].getOperacaoIO().dequeue();
-					System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
-					break;
-				}
 				for(int i = 0; i<processos.length; i++) {
-					String fila = "";
 					if(processos[i].getChegada() == global) {
 						fila += processos[i].getPid() + "(" + processos[i].getDuracao() + ")";
 					}
@@ -95,10 +88,16 @@ public class Teste {
 						System.out.println("FILA: " + fila);
 					}
 				}
+				if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
+					posicao[0].getOperacaoIO().dequeue();
+					System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
+					break;
+				}
 				posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
 				posicao[0].setDuracao(posicao[0].getDuracao() - 1);
 			}
 			filaProcessos.enqueueProcesso(posicao[0]);
+			break;
 		}
 	}
 
