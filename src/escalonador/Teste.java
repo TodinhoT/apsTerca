@@ -57,10 +57,22 @@ public class Teste {
 		}
 //------------ escalonador ----------------------------------
 		Fila filaProcessos = new Fila();
+		Processo[] posicao = new Processo[1];
+		
 		for (int i = 0; i < processos.length; i++) {
-			filaProcessos.enqueueProcesso(processos[i]);
+			for (int j = 0; j < processos.length - 1; j++) {
+				if(processos[j].getChegada() > processos[j+1].getChegada()) {
+					posicao[0] = processos[j];
+					processos[j] = processos[j+1];
+					processos[j+1] = posicao[0];
+					
+				}
+			}
 		}
-		System.out.println(filaProcessos.showProcessos());
+		
+		for (int i = 0; i < processos.length; i++) {
+			System.out.println(processos[i].getPid());
+		}
 
 	}
 
