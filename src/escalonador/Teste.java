@@ -60,44 +60,41 @@ public class Teste {
 		Processo[] posicao = new Processo[1];
 		int global = 0;
 		String fila = "";
-		
+
 		for (int i = 0; i < processos.length; i++) {
 			for (int j = 0; j < processos.length - 1; j++) {
-				if(processos[j].getChegada() > processos[j+1].getChegada()) {
+				if (processos[j].getChegada() > processos[j + 1].getChegada()) {
 					posicao[0] = processos[j];
-					processos[j] = processos[j+1];
-					processos[j+1] = posicao[0];
-					
+					processos[j] = processos[j + 1];
+					processos[j + 1] = posicao[0];
+
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < processos.length; i++) {
 			filaProcessos.enqueueProcesso(processos[i]);
 		}
 		
-		while(true) {
-			posicao[0] = filaProcessos.dequeueProcesso();
-			
-			for(int j = 0; j < 4; j++) {
-				if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
-					posicao[0].getOperacaoIO().dequeue();
-					System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
-					break;
-				}
-				for(int i = 0; i<processos.length; i++) {
-					if(processos[i].getChegada() <= global) {
-						fila += processos[j].getPid() + "(" + processos[j].getDuracao() + ")";
+		posicao[0] = null;
+		while (global < 5) {
+			if (global == 0) {
+				filaProcessos.dequeueProcesso();
+				for (int j = 0; j < 4; j++) {
+					if (posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
+						posicao[0].getOperacaoIO().dequeue();
+						System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
+						break;
 					}
-					if(i == processos.length - 1) {
-						System.out.println("FILA: " + fila);
-					}
+
+					posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
+					posicao[0].setDuracao(posicao[0].getDuracao() - 1);
 				}
-				posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
-				posicao[0].setDuracao(posicao[0].getDuracao() - 1);
+				filaProcessos.enqueueProcesso(posicao[0]);
+			}else if(posicao[0] == null){
+				
 			}
-			filaProcessos.enqueueProcesso(posicao[0]);
-			break;
+			global++;
 		}
 	}
 
