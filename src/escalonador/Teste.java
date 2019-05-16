@@ -57,6 +57,7 @@ public class Teste {
 		}
 //------------ escalonador ----------------------------------
 		Fila filaProcessos = new Fila();
+		Fila CPU = new Fila();
 		Processo[] posicao = new Processo[1];
 		int global = 0;
 		String fila = "";
@@ -75,9 +76,32 @@ public class Teste {
 		for (int i = 0; i < processos.length; i++) {
 			filaProcessos.enqueueProcesso(processos[i]);
 		}
-		
+
 		posicao[0] = null;
 		while (global < 5) {
+			for (int i = 0; i < processos.length; i++) {
+				if (global <= processos[processos.length - 1].getChegada()) {
+					if(processos[i].getChegada() == global) {
+						System.out.println("PROCESSO CHEGOU");
+						CPU.enqueueProcesso(processos[i]);
+						for(int j = 0; j < 4; j++) {
+							if(j == 0) {
+								posicao[0] = CPU.dequeueProcesso();
+							}
+							if(j == 3) {
+								System.out.println("QUANTUM ATINGIDO");
+								CPU.enqueueProcesso(processos[0]);
+							}
+							if(posicao[0].getOperacaoIO().peek() == global) {
+								CPU.enqueueProcesso(posicao[0]);
+								posicao[0] =CPU.dequeueProcesso();
+							}
+						}
+					}
+				}else {
+					posicao[0] = filaProcessos.dequeueProcesso();
+				}
+			}
 			if (filaProcessos.peekProcesso().getChegada() == global) {
 				posicao[0] = filaProcessos.dequeueProcesso();
 				for (int j = 0; j < 4; j++) {
@@ -91,8 +115,8 @@ public class Teste {
 					posicao[0].setDuracao(posicao[0].getDuracao() - 1);
 				}
 				filaProcessos.enqueueProcesso(posicao[0]);
-			}else if(posicao[0] == null){
-				
+			} else if (posicao[0] == null) {
+
 			}
 			global++;
 		}
