@@ -88,15 +88,15 @@ public class Teste {
 							if(j == 0) {
 								posicao[0] = CPU.dequeueProcesso();
 							}
-							if(j == 3) {
-								System.out.println("QUANTUM ATINGIDO");
-								CPU.enqueueProcesso(processos[0]);
-							}
 							if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
 								System.out.println("OPERACAO I/O");
 								CPU.enqueueProcesso(posicao[0]);
 								posicao[0] =CPU.dequeueProcesso();
-							}
+							}							
+							if(j == 3) {
+								System.out.println("QUANTUM ATINGIDO");
+								CPU.enqueueProcesso(processos[0]);
+							}						
 							
 							posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
 							posicao[0].setDuracao(posicao[0].getDuracao() - 1);
