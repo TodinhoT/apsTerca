@@ -78,7 +78,7 @@ public class Teste {
 		}
 
 		posicao[0] = null;
-		while (global < 5) {
+		while (true) {
 			for (int i = 0; i < processos.length; i++) {
 				if (global <= processos[processos.length - 1].getChegada()) {
 					if(processos[i].getChegada() == global) {
@@ -92,34 +92,38 @@ public class Teste {
 								System.out.println("QUANTUM ATINGIDO");
 								CPU.enqueueProcesso(processos[0]);
 							}
-							if(posicao[0].getOperacaoIO().peek() == global) {
+							if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
+								System.out.println("OPERACAO I/O");
 								CPU.enqueueProcesso(posicao[0]);
 								posicao[0] =CPU.dequeueProcesso();
 							}
+							
+							posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
+							posicao[0].setDuracao(posicao[0].getDuracao() - 1);
+							global++;
 						}
 					}
 				}else {
-					posicao[0] = filaProcessos.dequeueProcesso();
-				}
-			}
-			if (filaProcessos.peekProcesso().getChegada() == global) {
-				posicao[0] = filaProcessos.dequeueProcesso();
-				for (int j = 0; j < 4; j++) {
-					if (posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
-						posicao[0].getOperacaoIO().dequeue();
-						System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
-						break;
+					for(int j = 0; j < 4; j++) {
+						if(j == 0) {
+							posicao[0] = CPU.dequeueProcesso();
+						}
+						if(j == 3) {
+							System.out.println("QUANTUM ATINGIDO");
+							CPU.enqueueProcesso(processos[0]);
+						}
+						if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
+							System.out.println("OPERACAO I/O");
+							CPU.enqueueProcesso(posicao[0]);
+							posicao[0] =CPU.dequeueProcesso();
+						}
+						
+						posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
+						posicao[0].setDuracao(posicao[0].getDuracao() - 1);
+						global++;
 					}
-
-					posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
-					posicao[0].setDuracao(posicao[0].getDuracao() - 1);
 				}
-				filaProcessos.enqueueProcesso(posicao[0]);
-			} else if (posicao[0] == null) {
-
 			}
-			global++;
 		}
 	}
-
 }
