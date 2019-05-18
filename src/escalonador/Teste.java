@@ -13,7 +13,9 @@ public class Teste {
 
 		gf.leitor(path);
 		
-		linhas = gf.getLinhas().clone();
+		for (int i = 0; i < linhas.length; i++) {
+			linhas[i] = gf.getLinhas().dequeueLinha();
+		}
 		Processo[] processos = new Processo[linhas.length];
 //-------------------- Guardar todos os processos a partir do arquivo -------------------------------------
 		for (int i = 0; i < linhas.length; i++) {

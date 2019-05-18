@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class GerenciadorDeArquivo {
 	private int qtdLinhas = 0;
-	private String[] linhas = new String[20];
+	private Fila linhas;
 
 	public void leitor(String path) throws IOException {
 		BufferedReader buffRead = new BufferedReader(new FileReader(path));
@@ -25,10 +25,10 @@ public class GerenciadorDeArquivo {
 	}
 	
 	public void addLinha(String linha) {
-		this.linhas[this.qtdLinhas] = linha;
+		linhas.enqueueLinha(linha);
 	}
 	
-	public String[] getLinhas() {
+	public Fila getLinhas() {
 		return linhas;
 	}
 

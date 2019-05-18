@@ -36,6 +36,17 @@ public class Fila {
 		}
 	}
 	
+	public void enqueueLinha( String ddLinha ){
+		No newNo = new No( ddLinha );
+		
+		if(inicio == null){
+			inicio = fim = newNo;
+		}else{
+			fim.setNextNo(newNo);
+			fim = newNo;
+		}
+	}
+	
 	public int dequeue( ){
 		if ( isEmpty( ) ){
 			return -1;
@@ -64,6 +75,21 @@ public class Fila {
 		}
 		
 		return temp.getDd();
+	}
+	
+	public String dequeueLinha( ){
+		if ( isEmpty( ) ){
+			return null;
+		}
+
+		No temp = inicio;
+		inicio = inicio.getNextNo();
+		
+		if(inicio == null){
+			fim = null;
+		}
+		
+		return temp.getDdLinha();
 	}
 	
 	public String showProcessos() {

@@ -3,6 +3,7 @@ package escalonador;
 public class No {
 	private int dado;
 	private Processo dd;
+	private String ddLinha;
 	private No nextNo;
 	
 	public No(int dd) {
@@ -15,6 +16,19 @@ public class No {
 		this.nextNo = null;
 	}
 	
+	public No(String ddlinha) {
+		this.ddLinha = ddlinha;
+		this.nextNo = null;
+	}
+	
+	public String getDdLinha() {
+		return ddLinha;
+	}
+
+	public void setDdLinha(String ddLinha) {
+		this.ddLinha = ddLinha;
+	}
+
 	public Processo getDd() {
 		return dd;
 	}
