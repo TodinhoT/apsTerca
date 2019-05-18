@@ -1,7 +1,6 @@
 package escalonador;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Teste {
 	public static void main(String[] args) throws IOException {
@@ -60,7 +59,6 @@ public class Teste {
 		Fila CPU = new Fila();
 		Processo[] posicao = new Processo[1];
 		int global = 0;
-		String fila = "";
 
 		for (int i = 0; i < processos.length; i++) {
 			for (int j = 0; j < processos.length - 1; j++) {
@@ -78,52 +76,66 @@ public class Teste {
 		}
 
 		posicao[0] = null;
+		int doneCounter = 0;
+		int IOverif = 0;
 		while (true) {
-			for (int i = 0; i < processos.length; i++) {
-				if (global <= processos[processos.length - 1].getChegada()) {
-					if(processos[i].getChegada() == global) {
-						System.out.println("PROCESSO CHEGOU");
-						CPU.enqueueProcesso(processos[i]);
-						for(int j = 0; j < 4; j++) {
-							if(j == 0) {
-								posicao[0] = CPU.dequeueProcesso();
-							}
-							if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
-								System.out.println("OPERACAO I/O");
+			for (int j = 0; j < 4; j++, global++) {
+				IOverif = 0;
+				System.out.println("TEMPO " + global);
+
+				if (!filaProcessos.isEmpty()) {
+					if (global == filaProcessos.peekProcesso().getChegada()) {
+						if (posicao[0] == null) { // Se a CPU estiver vazia
+							posicao[0] = filaProcessos.dequeueProcesso(); // O processo não precisa ir para a fila da
+																			// CPU
+							System.out.println("PROCESSO " + posicao[0].getPid() + " CHEGOU");
+						} else {
+							System.out.println("PROCESSO " + filaProcessos.peekProcesso().getPid() + " CHEGOU");
+							if (posicao[0].getTempExecucao() == posicao[0].getOperacaoIO().peek()) {
+								posicao[0].getOperacaoIO().dequeue();
 								CPU.enqueueProcesso(posicao[0]);
-								posicao[0] =CPU.dequeueProcesso();
-							}							
-							if(j == 3) {
-								System.out.println("QUANTUM ATINGIDO");
-								CPU.enqueueProcesso(processos[0]);
-							}						
-							
-							posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
-							posicao[0].setDuracao(posicao[0].getDuracao() - 1);
-							global++;
+								posicao[0] = CPU.dequeueProcesso();
+								CPU.enqueueProcesso(filaProcessos.dequeueProcesso()); // O processo entra na fila da CPU
+								IOverif = 1;
+								j = -1;
+							} else {
+								CPU.enqueueProcesso(filaProcessos.dequeueProcesso());
+							}
 						}
-					}
-				}else {
-					for(int j = 0; j < 4; j++) {
-						if(j == 0) {
-							posicao[0] = CPU.dequeueProcesso();
-						}
-						if(j == 3) {
-							System.out.println("QUANTUM ATINGIDO");
-							CPU.enqueueProcesso(processos[0]);
-						}
-						if(posicao[0].getOperacaoIO().peek() == posicao[0].getTempExecucao()) {
-							System.out.println("OPERACAO I/O");
-							CPU.enqueueProcesso(posicao[0]);
-							posicao[0] =CPU.dequeueProcesso();
-						}
-						
-						posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
-						posicao[0].setDuracao(posicao[0].getDuracao() - 1);
-						global++;
 					}
 				}
+
+				if (posicao[0].getTempExecucao() + 1 == posicao[0].getOperacaoIO().peek() && IOverif != 1) {
+					System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
+					posicao[0].getOperacaoIO().dequeue();
+					CPU.enqueueProcesso(posicao[0]);
+					posicao[0] = CPU.dequeueProcesso();
+					j = -1;
+				}
+				if (j == 3 && posicao[0].getTempExecucao() + 1 < posicao[0].getDuracao()) {
+					System.out.println("QUANTUM ATINGIDO " + posicao[0].getPid());
+					CPU.enqueueProcesso(posicao[0]);
+					posicao[0] = CPU.dequeueProcesso();
+				}
+				if (posicao[0].getTempExecucao() + 1 == posicao[0].getDuracao()) {
+					System.out.println("ENCERRANDO " + posicao[0].getPid());
+					posicao[0] = CPU.dequeueProcesso();
+					j = -1;
+					doneCounter++;
+				}
+				if (doneCounter == processos.length) {
+					break;
+				}
+				posicao[0].setTempExecucao(posicao[0].getTempExecucao() + 1);
+				posicao[0].setTempRestante(posicao[0].getTempRestante() - 1);
+				System.out.println("CPU: " + posicao[0].getPid() + "(" + (posicao[0].getTempRestante() + 1) + ")");
+				System.out.println("FILA: " + CPU.showProcessos());
+				System.out.println("\n");
+			}
+			if (doneCounter == processos.length) {
+				break;
 			}
 		}
+		System.out.println("FIM DOS PROCESSOS");
 	}
 }
