@@ -10,6 +10,11 @@ import java.io.IOException;
 public class GerenciadorDeArquivo {
 	private int qtdLinhas = 0;
 	private Fila linhas;
+	
+	
+	public GerenciadorDeArquivo() {
+		this.linhas = new Fila();
+	}
 
 	public void leitor(String path) throws IOException {
 		BufferedReader buffRead = new BufferedReader(new FileReader(path));
@@ -17,15 +22,12 @@ public class GerenciadorDeArquivo {
 
 		while (buffRead.ready()) {
 			linha = buffRead.readLine();
-			addLinha(linha);
-			
+			if(linha != null) {
+				linhas.enqueueLinha(linha);
+			}
 			this.qtdLinhas++;
 		}
 		buffRead.close();
-	}
-	
-	public void addLinha(String linha) {
-		linhas.enqueueLinha(linha);
 	}
 	
 	public Fila getLinhas() {
