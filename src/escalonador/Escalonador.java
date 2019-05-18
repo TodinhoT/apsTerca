@@ -2,24 +2,20 @@ package escalonador;
 
 import java.io.IOException;
 
-public class Teste {
+public class Escalonador {
 	public static void main(String[] args) throws IOException {
 		GerenciadorDeArquivo gf = new GerenciadorDeArquivo();
 		String path = "APS.txt";
 		String pid = "";
 		int duracao = 0, chegada = 0;
-		String[] linhas = new String[gf.getQtdLinhas()];
 
 
 		gf.leitor(path);
 		
-		for (int i = 0; i < linhas.length; i++) {
-			linhas[i] = gf.getLinhas().dequeueLinha();
-		}
-		Processo[] processos = new Processo[linhas.length];
+		Processo[] processos = new Processo[gf.getLinhas().size()];
 //-------------------- Guardar todos os processos a partir do arquivo -------------------------------------
-		for (int i = 0; i < linhas.length; i++) {
-			String[] temp = linhas[i].split("\\s");
+		for (int i = 0; i < processos.length; i++) {
+			String[] temp = gf.getLinhas().dequeueLinha().split("\\s");
 
 			for (int j = 0; j < temp.length + 1; j++) {
 				switch (j) {
