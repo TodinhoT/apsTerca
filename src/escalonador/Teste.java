@@ -10,10 +10,11 @@ public class Teste {
 		int duracao = 0, chegada = 0;
 		String[] linhas = new String[gf.getQtdLinhas()];
 
-		Processo[] processos = new Processo[5];
 
 		gf.leitor(path);
+		
 		linhas = gf.getLinhas().clone();
+		Processo[] processos = new Processo[linhas.length];
 //-------------------- Guardar todos os processos a partir do arquivo -------------------------------------
 		for (int i = 0; i < linhas.length; i++) {
 			String[] temp = linhas[i].split("\\s");
@@ -47,19 +48,12 @@ public class Teste {
 			}
 		}
 
-		for (int i = 0; i < processos.length; i++) {
-			System.out.println(processos[i].getPid());
-			System.out.println(processos[i].getDuracao());
-			System.out.println(processos[i].getChegada());
-			System.out.println(processos[i].getOperacaoIO().show());
-			System.out.println("--------------------------------------------------------------------------");
-		}
 //------------ escalonador ----------------------------------
 		Fila filaProcessos = new Fila();
 		Fila CPU = new Fila();
 		Processo[] posicao = new Processo[1];
 		int global = 0;
-
+		
 		for (int i = 0; i < processos.length; i++) {
 			for (int j = 0; j < processos.length - 1; j++) {
 				if (processos[j].getChegada() > processos[j + 1].getChegada()) {
@@ -74,7 +68,13 @@ public class Teste {
 		for (int i = 0; i < processos.length; i++) {
 			filaProcessos.enqueueProcesso(processos[i]);
 		}
-
+		
+		System.out.println("**************************************");
+		System.out.println("*******ESCALONADOR ROUND ROBIN********");
+		System.out.println("--------------------------------------");
+		System.out.println("-------Comecando a simulacao----------");
+		System.out.println("--------------------------------------");
+		
 		posicao[0] = null;
 		int doneCounter = 0;
 		int IOverif = 0;
@@ -88,17 +88,17 @@ public class Teste {
 						if (posicao[0] == null) { // Se a CPU estiver vazia
 							posicao[0] = filaProcessos.dequeueProcesso(); // O processo não precisa ir para a fila da
 																			// CPU
-							System.out.println("PROCESSO " + posicao[0].getPid() + " CHEGOU");
+							System.out.println("#[evento] PROCESSO " + posicao[0].getPid() + " CHEGOU");
 						} else {
-							System.out.println("PROCESSO " + filaProcessos.peekProcesso().getPid() + " CHEGOU");
+							System.out.println("#[evento] PROCESSO " + filaProcessos.peekProcesso().getPid() + " CHEGOU");
 							if (posicao[0].getTempExecucao() == posicao[0].getOperacaoIO().peek()
 									|| j == 3 && posicao[0].getTempExecucao() < posicao[0].getDuracao()) {
 								if (posicao[0].getTempExecucao() == posicao[0].getOperacaoIO().peek()) {
-									System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
+									System.out.println("#[evento] OPERACAO I/O <" + posicao[0].getPid() + ">");
 									posicao[0].getOperacaoIO().dequeue();
 								}
 								if (j == 3 && posicao[0].getTempExecucao() < posicao[0].getDuracao()) {
-									System.out.println("QUANTUM ATINGIDO " + posicao[0].getPid());
+									System.out.println("#[evento] QUANTUM ATINGIDO " + posicao[0].getPid());
 								}
 								CPU.enqueueProcesso(posicao[0]);
 								posicao[0] = CPU.dequeueProcesso();
@@ -113,19 +113,19 @@ public class Teste {
 				}
 
 				if (posicao[0].getTempExecucao() == posicao[0].getOperacaoIO().peek() && IOverif != 1) {
-					System.out.println("OPERACAO I/O <" + posicao[0].getPid() + ">");
+					System.out.println("#[evento] OPERACAO I/O <" + posicao[0].getPid() + ">");
 					posicao[0].getOperacaoIO().dequeue();
 					CPU.enqueueProcesso(posicao[0]);
 					posicao[0] = CPU.dequeueProcesso();
 					j = -1;
 				}
 				if (j == 3 && posicao[0].getTempExecucao() < posicao[0].getDuracao()) {
-					System.out.println("QUANTUM ATINGIDO " + posicao[0].getPid());
+					System.out.println("#[evento] QUANTUM ATINGIDO " + posicao[0].getPid());
 					CPU.enqueueProcesso(posicao[0]);
 					posicao[0] = CPU.dequeueProcesso();
 				}
 				if (posicao[0].getTempExecucao() == posicao[0].getDuracao()) {
-					System.out.println("ENCERRANDO " + posicao[0].getPid());
+					System.out.println("#[evento] ENCERRANDO " + posicao[0].getPid());
 					posicao[0] = CPU.dequeueProcesso();
 					j = -1;
 					doneCounter++;
@@ -144,5 +144,8 @@ public class Teste {
 			}
 		}
 		System.out.println("FIM DOS PROCESSOS");
+		System.out.println("--------------------------------------");
+		System.out.println("-------ENCERRANDO SIMULACAO-----------");
+		System.out.println("--------------------------------------");
 	}
 }
