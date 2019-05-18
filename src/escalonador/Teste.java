@@ -91,8 +91,10 @@ public class Teste {
 							System.out.println("PROCESSO " + posicao[0].getPid() + " CHEGOU");
 						} else {
 							System.out.println("PROCESSO " + filaProcessos.peekProcesso().getPid() + " CHEGOU");
-							if (posicao[0].getTempExecucao() == posicao[0].getOperacaoIO().peek()) {
-								posicao[0].getOperacaoIO().dequeue();
+							if (posicao[0].getTempExecucao() == posicao[0].getOperacaoIO().peek() || j == 3 && posicao[0].getTempExecucao() + 1 < posicao[0].getDuracao()) {
+								if (posicao[0].getTempExecucao() == posicao[0].getOperacaoIO().peek()) {
+									posicao[0].getOperacaoIO().dequeue();
+								}
 								CPU.enqueueProcesso(posicao[0]);
 								posicao[0] = CPU.dequeueProcesso();
 								CPU.enqueueProcesso(filaProcessos.dequeueProcesso()); // O processo entra na fila da CPU
