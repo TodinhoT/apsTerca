@@ -95,9 +95,16 @@ public class Teste {
 								if (posicao[0].getTempExecucao() == posicao[0].getOperacaoIO().peek()) {
 									posicao[0].getOperacaoIO().dequeue();
 								}
-								CPU.enqueueProcesso(posicao[0]);
-								posicao[0] = CPU.dequeueProcesso();
-								CPU.enqueueProcesso(filaProcessos.dequeueProcesso()); // O processo entra na fila da CPU
+								for (int k = 0; k < 2; k++) {
+									if (k == 0) {
+										CPU.enqueueProcesso(posicao[0]);
+										posicao[0] = CPU.dequeueProcesso();
+									}
+									if (k == 1) {
+										CPU.enqueueProcesso(filaProcessos.dequeueProcesso()); // O processo entra na
+																								// fila da CPU
+									}
+								}
 								IOverif = 1;
 								j = -1;
 							} else {
