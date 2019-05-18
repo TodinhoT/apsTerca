@@ -74,7 +74,7 @@ public class Fila {
 			No atual = inicio;
 
 			while (atual != null) {
-				saida += atual.getDd().getPid() + " ";
+				saida += atual.getDd().getPid() + "(" + atual.getDd().getTempRestante() + ")" + " ";
 				atual = atual.getNextNo();
 			}
 			

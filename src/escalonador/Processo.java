@@ -5,7 +5,7 @@ public class Processo {
 	private int duracao;
 	private int chegada;
 	private Fila operacaoIO;
-	private int tempExecucao = -1;
+	private int tempExecucao = 0;
 	private int tempRestante;
 
 	public Processo(String pid, int duracao, int chegada) {
